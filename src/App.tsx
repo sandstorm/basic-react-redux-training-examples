@@ -10,6 +10,7 @@ import './App.css';
 import Counter from './examples/Counter'
 import CounterUseReducer from './examples/CounterReducer'
 import ControlledInput from './examples/ControlledInput'
+import GithubRepoList from './examples/GithubRepoList'
 
 const App: React.FC = () => {
   return (
@@ -21,11 +22,13 @@ const App: React.FC = () => {
           </li>
           <li><Link to='/counter-reducer'>Counter (useReducer)</Link></li>
           <li><Link to='/controlled-input'>Controlled input</Link></li>
+          <li><Link to='/github-repos'>Gith repositories by user</Link></li>
         </ul>
         <Switch>
           <Route path='/counter' component={Counter} />
           <Route path='/counter-reducer' component={CounterUseReducer} />
           <Route path='/controlled-input' component={ControlledInput} />
+          <Route path='/github-repos' component={GithubRepoList} />
         </Switch>
       </div>
     </Router>
