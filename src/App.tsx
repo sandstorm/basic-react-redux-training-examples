@@ -8,6 +8,7 @@ import {
 import './App.css';
 
 import Counter from './examples/Counter'
+import CounterUseReducer from './examples/CounterReducer'
 
 const App: React.FC = () => {
   return (
@@ -17,9 +18,11 @@ const App: React.FC = () => {
           <li>
           <Link to='/counter'>Counter</Link>
           </li>
+          <li><Link to='/counter-reducer'>Counter (useReducer)</Link></li>
         </ul>
         <Switch>
           <Route path='/counter' component={Counter} />
+          <Route path='/counter-reducer' component={CounterUseReducer} />
         </Switch>
       </div>
     </Router>
