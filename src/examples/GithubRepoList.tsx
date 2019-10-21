@@ -18,10 +18,6 @@ const renderUserRepositories = (repositories: Repository[] = []) => repositories
   ))
 
 const fetchUserRepos = async (user: string, callback: (repos: Repository[]) => void) => {
-  if (true) {
-    console.log('called')
-  }
-
   if (user.length < 3) {
     return
   }
@@ -42,8 +38,8 @@ const GithubRepoList = React.memo((props: Props) => {
   // Otherwise we would get a new function on every render which would break our debouncing ;)
   const debouncedFetch = useRef<(user: string, callback: (repos: Repository[]) => void) => void>()
 
+  // Here we make sure, that our debounce function is created exactly once
   useEffect(() => {
-    console.log('stuff')
     debouncedFetch.current = debounce(500, fetchUserRepos)
   },[])
 
