@@ -14,6 +14,7 @@ import GithubRepoList from 'examples/GithubRepoList'
 
 import ControlledInputRedux from 'examples/Redux/ControlledInput'
 import ConsumingDiv from 'examples/Redux/ControlledInput/ConsumingDiv'
+import GithubReposRedux from 'examples/Redux/GithubRepos/'
 
 const App: React.FC = () => {
   return (
@@ -27,9 +28,10 @@ const App: React.FC = () => {
           </li>
           <li><Link to='/counter-reducer'>Counter (useReducer)</Link></li>
           <li><Link to='/controlled-input'>Controlled input</Link></li>
-          <li><Link to='/github-repos'>Gith repositories by user</Link></li>
+          <li><Link to='/github-repos'>Github repositories by user</Link></li>
           <h2>React with Redux</h2>
           <li><Link to='/controlled-input-redux'>Controlled input</Link></li>
+          <li><Link to='/github-repos-redux'>Github repositories by user</Link></li>
         </ul>
         <div style={{ border: '1px solid #999', width: '400px', margin: '20px auto', padding: '20px' }}>
           <Switch>
@@ -38,6 +40,7 @@ const App: React.FC = () => {
             <Route path='/controlled-input' component={ControlledInput} />
             <Route path='/github-repos' component={GithubRepoList} />
             <Route path='/controlled-input-redux' component={ControlledInputRedux} />
+            <Route path='/github-repos-redux' component={GithubReposRedux} />
           </Switch>
         </div>
         <Route path='/controlled-input-redux' component={ConsumingDiv} />

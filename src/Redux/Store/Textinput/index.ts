@@ -1,6 +1,6 @@
 import { createAction, ActionsUnion } from '@martin_hotell/rex-tils'
 
-import { RootState } from '../index'
+import { RootState } from 'Redux/Store'
 
 
 ///////////
