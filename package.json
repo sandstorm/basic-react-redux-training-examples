@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@martin_hotell/rex-tils": "^2.1.1",
     "@types/jest": "24.0.19",
     "@types/lodash": "^4.14.144",
     "@types/node": "12.11.1",
@@ -10,6 +11,7 @@
     "@types/react-dom": "16.9.2",
     "@types/react-redux": "^7.1.5",
     "@types/react-router-dom": "^5.1.0",
+    "@types/reselect": "^2.2.0",
     "lodash": "^4.17.15",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
@@ -19,6 +21,7 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-observable": "^1.2.0",
+    "reselect": "^4.0.0",
     "rxjs": "^6.5.3",
     "typescript": "3.6.4"
   },
