@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import * as Textinput from './Textinput'
 import * as GithubRepos from './Githubrepos'
 
-export type Action = Textinput.Action | GithubRepos.Action
+export type RootAction = Textinput.Action | GithubRepos.Action
 
 export const actions = {
   Textinput: Textinput.actions,

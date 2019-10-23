@@ -3,16 +3,16 @@ import { ofType } from '@martin_hotell/rex-tils'
 import { mergeMap, map } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
 
-import { Action, RootState } from 'Redux/Store'
-import { ActionTypes, actions} from './index'
+import { RootAction, RootState } from 'Redux/Store'
+import { ActionTypes, actions, Repository} from './index'
 
-type MyEpic = Epic<Action, Action, RootState, never>
+type MyEpic = Epic<RootAction, RootAction, RootState>
 
 const fetchReposEpic: MyEpic = (action$) => action$
   .pipe(
     ofType(ActionTypes.REPOS_FETCH),
     mergeMap((action) => ajax
-     .getJSON(`https://api.github.com/users/${action.payload.user}/repos`)
+     .getJSON<Array<Repository>>(`https://api.github.com/users/${action.payload.user}/repos`)
      .pipe(
          map((response) => actions.fetchSuccess(response)),
          // catchError((message: string) => actions.fetchFailed(message)),
