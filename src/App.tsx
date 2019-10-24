@@ -14,7 +14,6 @@ import GithubRepoList from 'examples/GithubRepoList'
 
 import ControlledInputRedux from 'examples/Redux/ControlledInput'
 import ConsumingDiv from 'examples/Redux/ControlledInput/ConsumingDiv'
-import GithubReposRedux from 'examples/Redux/GithubRepos/'
 
 const App: React.FC = () => {
   return (
@@ -40,7 +39,6 @@ const App: React.FC = () => {
             <Route path='/controlled-input' component={ControlledInput} />
             <Route path='/github-repos' component={GithubRepoList} />
             <Route path='/controlled-input-redux' component={ControlledInputRedux} />
-            <Route path='/github-repos-redux' component={GithubReposRedux} />
           </Switch>
         </div>
         <Route path='/controlled-input-redux' component={ConsumingDiv} />
