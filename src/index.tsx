@@ -1,15 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { createEpicMiddleware } from 'redux-observable';
 import { configureStore } from 'redux-starter-kit'
-import { rootReducer } from './Redux/Store'
+
+import { rootReducer, rootEpic, RootAction, RootState } from './Redux/Store'
+
+import * as serviceWorker from './serviceWorker';
+
+import App from './App';
+import './index.css';
+
+const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState>();
 
 const store = configureStore({
   reducer: rootReducer,
+  middleware: [epicMiddleware],
 })
+
+epicMiddleware.run(rootEpic)
 
 ReactDOM.render(
   <Provider store={store}>

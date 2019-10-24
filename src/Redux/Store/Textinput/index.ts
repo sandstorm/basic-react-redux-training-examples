@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from 'redux-starter-kit'
+import { ActionsUnion } from '@martin_hotell/rex-tils'
 
 import { RootState } from 'Redux/Store'
 
@@ -19,7 +20,10 @@ const selectors = {
   getInputValue,
 }
 
+type TextInputAction = ActionsUnion<typeof textInput.actions>
+
 export {
   textInput,
   selectors,
+  TextInputAction,
 }
