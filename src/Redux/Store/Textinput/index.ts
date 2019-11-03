@@ -20,10 +20,9 @@ const selectors = {
   getInputValue,
 }
 
-type TextInputAction = ActionsUnion<typeof textInput.actions>
+export type TextInputAction = ActionsUnion<typeof textInput.actions>
 
 export {
   textInput,
   selectors,
-  TextInputAction,
 }

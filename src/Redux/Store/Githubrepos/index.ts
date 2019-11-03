@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from 'redux-starter-kit'
-import { combineEpics, ofType } from 'redux-observable'
-import { mergeMap, map, filter } from 'rxjs/operators'
+import { combineEpics, ActionsObservable } from 'redux-observable'
+import { of } from 'rxjs'
+import { mergeMap, map, filter, debounceTime, catchError, tap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
 import { ActionsUnion } from '@martin_hotell/rex-tils'
 
 
-import { RootState, RootAction, RootEpic } from 'Redux/Store'
+import { RootState, RootAction } from 'Redux/Store'
 
 ///////////
 // Types //
@@ -22,11 +23,12 @@ export type Repository = {
 // Reducer + Actions //
 ///////////////////////
 
-type ReposFetch = {
-  user: string
+type State = {
+  loading: boolean,
+  repos: Repository[]
 }
 
-const initialState = {
+const initialState: State = {
   loading: false,
   repos: []
 }
@@ -35,16 +37,16 @@ const githubRepos = createSlice({
   name: 'githubRepos',
   initialState,
   reducers: {
-    fetch: (state, action: PayloadAction<{ user: string }>) => {
+    fetch: (state, _: PayloadAction<{ user: string }>) => {
       state.loading = true
     },
-    fetchSuccess: (state, action) => {
+    fetchSuccess: (state, action: PayloadAction<Repository[]>) => {
       state.loading = false
-      // TODO add repos
+      state.repos = action.payload
     },
-    fetchFailed: (state, action) => {
+    fetchFailed: (state, action: PayloadAction<string>) => {
       state.loading = false
-      // TODO add error
+      console.log(action.payload)
     }
   }
 })
@@ -53,15 +55,18 @@ const githubRepos = createSlice({
 // Epics //
 ///////////
 
-const fetchReposEpic: RootEpic = (action$) => action$
+const fetchReposEpic = (action$: ActionsObservable<RootAction>) => action$
   .pipe(
-      ofType<githubRepos.actions.fetch.type>(githubRepos.actions.fetch.type),
-      mergeMap((action: PayloadAction<ReposFetch>) => ajax
+      filter(githubRepos.actions.fetch.match),
+      tap((action) => console.log('before:', action)),
+      debounceTime(500),
+      tap((action) => console.log('after', action)),
+      mergeMap((action) => ajax
        .getJSON<Array<Repository>>(`https://api.github.com/users/${action.payload.user}/repos`)
-       // .pipe(
-           // map((response) => actions.fetchSuccess(response)),
-           // // catchError((message: string) => actions.fetchFailed(message)),
-       // )
+       .pipe(
+           map((response) => githubRepos.actions.fetchSuccess(response)),
+           catchError((message: string) => of(githubRepos.actions.fetchFailed(message))),
+       )
       )
     )
 
@@ -81,11 +86,10 @@ const selectors = {
   getLoading,
 }
 
-type GithubReposAction = ActionsUnion<typeof githubRepos.actions>
+export type GithubReposAction = ActionsUnion<typeof githubRepos.actions>
 
 export {
   githubRepos,
   selectors,
-  GithubReposAction,
   epics,
 }

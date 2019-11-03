@@ -11,7 +11,8 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';
 import './index.css';
 
-const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState>();
+// FIXME fix rootState typing
+const epicMiddleware = createEpicMiddleware<RootAction, RootAction, any>();
 
 const store = configureStore({
   reducer: rootReducer,

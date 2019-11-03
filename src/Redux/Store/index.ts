@@ -1,4 +1,4 @@
-import { Epic, combineEpics } from 'redux-observable';
+import { combineEpics } from 'redux-observable';
 import { combineReducers } from 'redux';
 
 import * as Textinput from './Textinput'
@@ -26,4 +26,3 @@ export const rootReducer = combineReducers({
 
 export type RootAction = Textinput.TextInputAction | GithubRepos.GithubReposAction
 export type RootState = ReturnType<typeof rootReducer>
-export type RootEpic = Epic<RootAction, RootAction, RootState>
