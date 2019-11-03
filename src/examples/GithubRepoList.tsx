@@ -17,36 +17,40 @@ const renderUserRepositories = (repositories: Repository[] = []) => repositories
     </li>
   ))
 
-const fetchUserRepos = async (user: string, callback: (repos: Repository[]) => void) => {
-  if (user.length < 3) {
-    return
-  }
-
+const fetchUserRepos = async (user: string) => {
   const response = await fetch(`https://api.github.com/users/${user}/repos`)
-  if (response.status === 200) {
-    const json = await response.json()
-    callback(json)
+  if (response.ok) {
+    return await response.json()
+  } else {
+    throw new Error('Something went wrong...')
   }
 }
 
-const GithubRepoList = React.memo((props: Props) => {
+const GithubRepoList = React.memo(() => {
   const [user, setUser] = useState('')
   const [userRepos, setUserRepositories] = useState<Repository[]>([])
 
   // We debounce because we can only make 60/requests per hour being an unauthorized github user
   // We also need to use useRef() here to keep a mutable instance of our debounce function
   // Otherwise we would get a new function on every render which would break our debouncing ;)
-  const debouncedFetch = useRef<(user: string, callback: (repos: Repository[]) => void) => void>()
+  const debouncedFetch = useRef<typeof fetchUserRepos>()
 
-  // Here we make sure, that our debounce function is created exactly once
+  // Here we make sure, that our debounced function is created exactly once
   useEffect(() => {
-    debouncedFetch.current = debounce(500, fetchUserRepos)
+    debouncedFetch.current = debounce(
+      500,
+      (user: string) => fetchUserRepos(user)
+        .then((response) => setUserRepositories(response))
+        .catch((error) => console.log(error))
+    )
   },[])
 
   const handleUserInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser(e.currentTarget.value)
-    if (debouncedFetch.current) {
-      debouncedFetch.current(e.currentTarget.value, setUserRepositories)
+    const newUserValue = e.currentTarget.value
+    setUser(newUserValue)
+
+    if (debouncedFetch.current && newUserValue.length > 2) {
+      debouncedFetch.current(newUserValue)
     }
   }
 
