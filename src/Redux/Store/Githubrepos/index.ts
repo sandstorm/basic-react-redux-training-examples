@@ -18,15 +18,14 @@ export type Repository = {
   html_url: string
 }
 
-
-///////////////////////
-// Reducer + Actions //
-///////////////////////
-
 type State = {
   loading: boolean,
   repos: Repository[]
 }
+
+///////////////////////
+// Reducer + Actions //
+///////////////////////
 
 const initialState: State = {
   loading: false,
