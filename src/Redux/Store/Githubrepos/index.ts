@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { combineEpics, ActionsObservable } from 'redux-observable'
 import { of } from 'rxjs'
 import { mergeMap, map, filter, debounceTime, catchError, tap } from 'rxjs/operators'

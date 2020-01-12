@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ActionsUnion } from '@martin_hotell/rex-tils'
 
 import { RootState } from 'Redux/Store'

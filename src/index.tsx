@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import { createEpicMiddleware } from 'redux-observable';
-import { configureStore } from 'redux-starter-kit'
+import { configureStore } from '@reduxjs/toolkit';
 
 import { rootReducer, rootEpic, RootAction, RootState } from './Redux/Store'
 

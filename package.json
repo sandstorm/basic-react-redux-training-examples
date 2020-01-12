@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@martin_hotell/rex-tils": "^2.1.1",
+    "@reduxjs/toolkit": "^1.2.1",
     "@types/jest": "24.0.19",
     "@types/lodash": "^4.14.144",
     "@types/node": "12.11.1",
@@ -21,7 +22,6 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-observable": "^1.2.0",
-    "redux-starter-kit": "^1.0.0",
     "reselect": "^4.0.0",
     "rxjs": "^6.5.3",
     "typescript": "^3.7.4"
