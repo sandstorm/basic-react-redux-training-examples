@@ -17,13 +17,13 @@
     "react-dom": "^16.10.2",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.3.0",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-observable": "^1.2.0",
     "reselect": "^4.0.0",
     "rxjs": "^6.5.3",
-    "typescript": "3.6.4"
+    "typescript": "^3.7.4"
   },
   "scripts": {
     "start": "react-scripts start",
