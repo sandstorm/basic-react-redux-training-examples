@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import configureStore from './Redux/configureStore'
+import { createEpicMiddleware } from 'redux-observable';
+import { configureStore } from '@reduxjs/toolkit';
 
-const store = configureStore()
+import { rootReducer, rootEpic, RootAction, RootState } from './Redux/Store'
+
+import * as serviceWorker from './serviceWorker';
+
+import App from './App';
+import './index.css';
+
+// FIXME fix rootState typing
+const epicMiddleware = createEpicMiddleware<RootAction, RootAction, any>();
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: [epicMiddleware],
+})
+
+epicMiddleware.run(rootEpic)
 
 ReactDOM.render(
   <Provider store={store}>

@@ -19,7 +19,7 @@ const ControlledInputRedux = React.memo(({
   changeValue,
 }: Props) => {
   return (
-    <input onChange={(e) => changeValue(e.currentTarget.value)} type='text' value={inputValue} />
+    <input onChange={(e) => changeValue({ newValue: e.currentTarget.value })} type='text' value={inputValue} />
   )
 })
 

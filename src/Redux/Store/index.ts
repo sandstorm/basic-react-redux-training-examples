@@ -4,11 +4,10 @@ import { combineReducers } from 'redux';
 import * as Textinput from './Textinput'
 import * as GithubRepos from './Githubrepos'
 
-export type RootAction = Textinput.Action | GithubRepos.Action
-
 export const actions = {
-  Textinput: Textinput.actions,
-  GithubRepos: GithubRepos.actions,
+  Textinput: Textinput.textInput.actions,
+  GithubRepos: GithubRepos.githubRepos.actions,
+
 }
 
 export const selectors = {
@@ -17,12 +16,13 @@ export const selectors = {
 }
 
 export const rootEpic = combineEpics(
-  GithubRepos.epic
+  GithubRepos.epics,
 );
 
 export const rootReducer = combineReducers({
-  Textinput: Textinput.Reducer,
-  GithubRepos: GithubRepos.Reducer,
+  Textinput: Textinput.textInput.reducer,
+  GithubRepos: GithubRepos.githubRepos.reducer,
 });
 
+export type RootAction = Textinput.TextInputAction | GithubRepos.GithubReposAction
 export type RootState = ReturnType<typeof rootReducer>

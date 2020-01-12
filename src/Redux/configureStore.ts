@@ -16,7 +16,7 @@ export default function configureStore() {
     composedEnhancers,
   );
 
-  epicMiddleware.run(rootEpic);
+  // epicMiddleware.run(rootEpic);
 
   return store;
 }

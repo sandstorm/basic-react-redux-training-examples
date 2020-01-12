@@ -1,11 +1,15 @@
-import { createAction, ActionsUnion } from '@martin_hotell/rex-tils'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { combineEpics, ActionsObservable } from 'redux-observable'
+import { of } from 'rxjs'
+import { mergeMap, map, filter, debounceTime, catchError, tap } from 'rxjs/operators'
+import { ajax } from 'rxjs/ajax'
+import { ActionsUnion } from '@martin_hotell/rex-tils'
 
-import { RootState } from 'Redux/Store'
 
-export { epic } from './epic'
+import { RootState, RootAction } from 'Redux/Store'
 
 ///////////
-// STATE //
+// Types //
 ///////////
 
 export type Repository = {
@@ -14,57 +18,77 @@ export type Repository = {
   html_url: string
 }
 
-export type State = {
-  loading: boolean
+type State = {
+  loading: boolean,
   repos: Repository[]
 }
 
-export const initialState: State = {
+///////////////////////
+// Reducer + Actions //
+///////////////////////
+
+const initialState: State = {
   loading: false,
   repos: []
 }
 
-/////////////
-// ACTIONS //
-/////////////
-
-export enum ActionTypes {
-  REPOS_FETCH = 'GithubRepos/REPOS_FETCH',
-  REPOS_FETCH_SUCCESS = 'GithubRepos/REPOS_FETCH_SUCCESS',
-  REPOS_FETCH_FAILURE = 'GithubRepos/REPOS_FETCH_FAILURE',
-}
-
-export const actions = {
-  fetchRepos: (user: string) => createAction(ActionTypes.REPOS_FETCH, { user } ),
-  fetchSuccess: (repos: Repository[]) => createAction(ActionTypes.REPOS_FETCH_SUCCESS, { repos }),
-  fetchFailed: (error: string) => createAction(ActionTypes.REPOS_FETCH_FAILURE, { error }),
-}
-
-export type Action = ActionsUnion<typeof actions>
-
-/////////////
-// REDUCER //
-/////////////
-
-export const Reducer = (
-  state: State = initialState,
-    action: Action
-) => {
-  switch (action.type) {
-    default: {
-      return state
+const githubRepos = createSlice({
+  name: 'githubRepos',
+  initialState,
+  reducers: {
+    fetch: (state, _: PayloadAction<{ user: string }>) => {
+      state.loading = true
+    },
+    fetchSuccess: (state, action: PayloadAction<Repository[]>) => {
+      state.loading = false
+      state.repos = action.payload
+    },
+    fetchFailed: (state, action: PayloadAction<string>) => {
+      state.loading = false
+      console.log(action.payload)
     }
   }
-}
+})
+
+///////////
+// Epics //
+///////////
+
+const fetchReposEpic = (action$: ActionsObservable<RootAction>) => action$
+  .pipe(
+      filter(githubRepos.actions.fetch.match),
+      tap((action) => console.log('before:', action)),
+      debounceTime(500),
+      tap((action) => console.log('after', action)),
+      mergeMap((action) => ajax
+       .getJSON<Array<Repository>>(`https://api.github.com/users/${action.payload.user}/repos`)
+       .pipe(
+           map((response) => githubRepos.actions.fetchSuccess(response)),
+           catchError((message: string) => of(githubRepos.actions.fetchFailed(message))),
+       )
+      )
+    )
+
+const epics = combineEpics(
+  fetchReposEpic,
+)
 
 ///////////////
-// SELECTORS //
+// Selectors //
 ///////////////
 
 const getRepos = (state: RootState) => state.GithubRepos.repos
 const getLoading = (state: RootState) => state.GithubRepos.loading
 
-export const selectors = {
+const selectors = {
   getRepos,
   getLoading,
+}
+
+export type GithubReposAction = ActionsUnion<typeof githubRepos.actions>
+
+export {
+  githubRepos,
+  selectors,
+  epics,
 }
