@@ -6,7 +6,7 @@ import { ajax } from 'rxjs/ajax'
 import { ActionsUnion } from '@martin_hotell/rex-tils'
 
 
-import { RootState, RootAction } from 'Redux/Store'
+import { RootState, RootAction, RootEpic } from 'Redux/Store'
 
 ///////////
 // Types //
@@ -54,7 +54,7 @@ const githubRepos = createSlice({
 // Epics //
 ///////////
 
-const fetchReposEpic = (action$: ActionsObservable<RootAction>) => action$
+const fetchReposEpic: RootEpic = (action$) => action$
   .pipe(
       filter(githubRepos.actions.fetch.match),
       tap((action) => console.log('before:', action)),

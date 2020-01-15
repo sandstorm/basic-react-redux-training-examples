@@ -12,7 +12,7 @@ import App from './App';
 import './index.css';
 
 // FIXME fix rootState typing
-const epicMiddleware = createEpicMiddleware<RootAction, RootAction, any>();
+const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState>();
 
 const store = configureStore({
   reducer: rootReducer,
