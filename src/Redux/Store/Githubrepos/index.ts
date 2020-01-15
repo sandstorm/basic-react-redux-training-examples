@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { combineEpics, ActionsObservable } from 'redux-observable'
+import { combineEpics } from 'redux-observable'
 import { of } from 'rxjs'
 import { mergeMap, map, filter, debounceTime, catchError, tap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
 import { ActionsUnion } from '@martin_hotell/rex-tils'
 
 
-import { RootState, RootAction, RootEpic } from 'Redux/Store'
+import { RootState, RootEpic } from 'Redux/Store'
 
 ///////////
 // Types //
