@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Route } from 'react-router'
 
 type Props = {
 }
 
-const Counter = React.memo((props: Props) => {
+const Counter = () => {
   const [counter, setCounter] = useState(0)
   const increase = () => setCounter(counter + 1)
   const decrease = () => setCounter(counter - 1)
@@ -13,6 +14,7 @@ const Counter = React.memo((props: Props) => {
     <div>
       <h3>Counter (useState)</h3>
       <div>
+        <Route path="/counter/something" component={() => (<h1>'someti'</h1>)} />
         <p>
           Value: {counter}
         </p>
@@ -25,6 +27,6 @@ const Counter = React.memo((props: Props) => {
       </div>
     </div>
   );
-})
+}
 
-export default Counter;
+export default React.memo(Counter);
