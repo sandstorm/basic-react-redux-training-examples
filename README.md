@@ -1,3 +1,24 @@
+# Sandstorm React training examples
+
+## Overview
+
+This repository contains a variety of training examples, including:
+
+* Pure React examples:
+  * ControlledInput
+  * Counter
+  * Counter with *useReducer()*
+  * Fetch from Github-API including debouncing
+* React + Redux examples:
+  * Github-API example with [redux-observable](https://redux-observable.js.org/)
+  * ControlledInput but with Redux
+
+All [Redux](https://redux.js.org/) examples use [Redux-toolkit](https://redux-toolkit.js.org/).
+To see a basic [React-Router](https://reacttraining.com/react-router/web/guides/quick-start) example in action, have a look at our *App.tsx*.
+
+
+## Create-React-App
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
