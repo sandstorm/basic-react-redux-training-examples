@@ -26,7 +26,7 @@ const fetchUserRepos = async (user: string) => {
   }
 }
 
-const GithubRepoList = React.memo(() => {
+const GithubRepoList = () => {
   const [user, setUser] = useState('')
   const [userRepos, setUserRepositories] = useState<Repository[]>([])
 
@@ -65,7 +65,6 @@ const GithubRepoList = React.memo(() => {
       </ul>
     </div>
   );
-})
+}
 
-export default GithubRepoList;
-
+export default React.memo(GithubRepoList);

@@ -14,13 +14,13 @@ const mapDispatchToProps = {
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & {
 }
 
-const ControlledInputRedux = React.memo(({
+const ControlledInputRedux = ({
   inputValue,
   changeValue,
 }: Props) => {
   return (
     <input onChange={(e) => changeValue({ newValue: e.currentTarget.value })} type='text' value={inputValue} />
   )
-})
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ControlledInputRedux)
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ControlledInputRedux))

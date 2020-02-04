@@ -24,7 +24,7 @@ const reducer = (state: State, action: Action): State => {
   }
 }
 
-const CounterUseReducer = React.memo((props: Props) => {
+const CounterUseReducer = (props: Props) => {
   const [counter, dispatch] = useReducer(reducer, 0)
 
   return (
@@ -43,6 +43,6 @@ const CounterUseReducer = React.memo((props: Props) => {
       </div>
     </div>
   );
-})
+}
 
-export default CounterUseReducer;
+export default React.memo(CounterUseReducer);

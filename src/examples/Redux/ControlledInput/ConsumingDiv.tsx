@@ -13,7 +13,7 @@ const mapDispatchToProps = {}
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & {
 }
 
-const ConsumingDiv = React.memo(({
+const ConsumingDiv = ({
   inputValue
 }: Props) => {
   return (
@@ -22,10 +22,10 @@ const ConsumingDiv = React.memo(({
       padding: '20px',
       border: '1px solid green',
     }}>
-      <p>Consuming div which is no child descendant of our content tree</p>
-      <p><b>Value:</b> {inputValue}</p>
+    <p>Consuming div which is no child descendant of our content tree</p>
+    <p><b>Value:</b> {inputValue}</p>
     </div>
   )
-})
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConsumingDiv)
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ConsumingDiv))

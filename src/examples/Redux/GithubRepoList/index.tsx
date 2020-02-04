@@ -29,7 +29,7 @@ const renderUserRepositories = (repositories: Repository[] = []) => repositories
     </li>
   ))
 
-const GithubRepoList = React.memo((props: Props) => {
+const GithubRepoList = (props: Props) => {
   const [user, setUser] = useState('')
 
   const handleUserInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,13 +47,13 @@ const GithubRepoList = React.memo((props: Props) => {
         ? <p>Loading...</p>
         : (
           <ul>
-          {renderUserRepositories(props.userRepos)}
+            {renderUserRepositories(props.userRepos)}
           </ul>
         )
       }
     </div>
   );
-})
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(GithubRepoList)
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(GithubRepoList))
 

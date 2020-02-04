@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 type Props = {
 }
 
-const ControlledInput = React.memo((props: Props) => {
+const ControlledInput = (props: Props) => {
   const [inputValue, setInputValue] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +21,6 @@ const ControlledInput = React.memo((props: Props) => {
       </div>
     </div>
   );
-})
+}
 
-export default ControlledInput;
+export default React.memo(ControlledInput);
